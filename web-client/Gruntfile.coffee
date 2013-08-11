@@ -33,6 +33,10 @@ module.exports = (grunt) ->
         files: ["test/spec/{,*/}*.coffee"]
         tasks: ["coffee:test"]
 
+      recess:
+        files: ['<%= yeoman.app %>/styles/{,*/}*.less']
+        tasks: ['recess']
+
       compass:
         files: ["<%= yeoman.app %>/styles/{,*/}*.{scss,sass}"]
         tasks: ["compass:server"]
@@ -122,7 +126,12 @@ module.exports = (grunt) ->
         options:
           debugInfo: true
 
-    
+    recess:
+      dist:
+        options:
+          compile: true
+        files:
+          '<%= yeoman.app %>/styles/main.css': ['<%= yeoman.app %>/styles/main.less']
     # not used since Uglify task does concat,
     # but still available if needed
     #concat: {
@@ -242,7 +251,13 @@ module.exports = (grunt) ->
 
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "open", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run ["clean:server", "concurrent:server", "connect:livereload", "open", "watch"]
+    grunt.task.run [
+      "clean:server",
+      "recess",
+      "concurrent:server",
+      "connect:livereload",
+      "open",
+      "watch"]
 
   grunt.registerTask "test", ["clean:server", "concurrent:test", "connect:test", "karma"]
   grunt.registerTask "build", ["clean:dist", "useminPrepare", "concurrent:dist", "concat", "copy", "cdnify", "ngmin", "cssmin", "uglify", "rev", "usemin"]
