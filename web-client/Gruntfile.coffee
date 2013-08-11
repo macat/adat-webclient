@@ -33,36 +33,39 @@ module.exports = (grunt) ->
         files: ["test/spec/{,*/}*.coffee"]
         tasks: ["coffee:test"]
 
+      jade:
+        files: ["<%= yeoman.app %>/{,*/}*.jade"]
+        tasks: ["jade"]
+
       recess:
         files: ['<%= yeoman.app %>/styles/{,*/}*.less']
         tasks: ['recess']
-
-      compass:
-        files: ["<%= yeoman.app %>/styles/{,*/}*.{scss,sass}"]
-        tasks: ["compass:server"]
 
       livereload:
         options:
           livereload: LIVERELOAD_PORT
 
-        files: ["<%= yeoman.app %>/{,*/}*.html", "{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css", "{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js", "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
+        files: [
+          "<%= yeoman.app %>/{,*/}*.jade",
+          "{tmp,<%= yeoman.app %>}/styles/{,*/}*.css",
+          "{tmp,<%= yeoman.app %>}/scripts/{,*/}*.js",
+          "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
 
     connect:
       options:
-        port: 9000
-        
+        port: 8000
         # Change this to '0.0.0.0' to access the server from outside.
         hostname: "localhost"
 
       livereload:
         options:
           middleware: (connect) ->
-            [lrSnippet, mountFolder(connect, ".tmp"), mountFolder(connect, yeomanConfig.app)]
+            [lrSnippet, mountFolder(connect, "tmp"), mountFolder(connect, yeomanConfig.app)]
 
       test:
         options:
           middleware: (connect) ->
-            [mountFolder(connect, ".tmp"), mountFolder(connect, "test")]
+            [mountFolder(connect, "tmp"), mountFolder(connect, "test")]
 
       dist:
         options:
@@ -77,10 +80,10 @@ module.exports = (grunt) ->
       dist:
         files: [
           dot: true
-          src: [".tmp", "<%= yeoman.dist %>/*", "!<%= yeoman.dist %>/.git*"]
+          src: ["tmp", "<%= yeoman.dist %>/*", "!<%= yeoman.dist %>/.git*"]
         ]
 
-      server: ".tmp"
+      server: "tmp"
 
     jshint:
       options:
@@ -94,7 +97,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.app %>/scripts"
           src: "{,*/}*.coffee"
-          dest: ".tmp/scripts"
+          dest: "tmp/scripts"
           ext: ".js"
         ]
 
@@ -103,28 +106,9 @@ module.exports = (grunt) ->
           expand: true
           cwd: "test/spec"
           src: "{,*/}*.coffee"
-          dest: ".tmp/spec"
+          dest: "tmp/spec"
           ext: ".js"
         ]
-
-    compass:
-      options:
-        sassDir: "<%= yeoman.app %>/styles"
-        cssDir: ".tmp/styles"
-        generatedImagesDir: ".tmp/images/generated"
-        imagesDir: "<%= yeoman.app %>/images"
-        javascriptsDir: "<%= yeoman.app %>/scripts"
-        fontsDir: "<%= yeoman.app %>/styles/fonts"
-        importPath: "<%= yeoman.app %>/bower_components"
-        httpImagesPath: "/images"
-        httpGeneratedImagesPath: "/images/generated"
-        httpFontsPath: "/styles/fonts"
-        relativeAssets: false
-
-      dist: {}
-      server:
-        options:
-          debugInfo: true
 
     recess:
       dist:
@@ -179,7 +163,7 @@ module.exports = (grunt) ->
     # dist: {
     #   files: {
     #     '<%= yeoman.dist %>/styles/main.css': [
-    #       '.tmp/styles/{,*/}*.css',
+    #       'tmp/styles/{,*/}*.css',
     #       '<%= yeoman.app %>/styles/{,*/}*.css'
     #     ]
     #   }
@@ -204,7 +188,6 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>"
         ]
 
-    
     # Put files not handled in other tasks here
     copy:
       dist:
@@ -216,15 +199,38 @@ module.exports = (grunt) ->
           src: ["*.{ico,png,txt}", ".htaccess", "bower_components/**/*", "images/{,*/}*.{gif,webp}", "styles/fonts/*"]
         ,
           expand: true
-          cwd: ".tmp/images"
+          cwd: "tmp/images"
           dest: "<%= yeoman.dist %>/images"
           src: ["generated/*"]
         ]
 
+    jade:
+      dev:
+        options:
+          pretty: true
+          data:
+            debug: true
+            blabla: 'ok!!!'
+        files:[
+          dest: "tmp/index.html"
+          src: ["app/index.jade"]
+        ]
+    less:
+      dev:
+        options:
+          paths: ['app/styles']
+          dumpLineNumbers: 'all'
+        files:[
+          dest: "tmp/styles/main.css"
+          src: ["app/styles/main.less"]
+        ]
+
+
+
     concurrent:
-      server: ["coffee:dist", "compass:server"]
-      test: ["coffee", "compass"]
-      dist: ["coffee", "compass:dist", "imagemin", "svgmin", "htmlmin"]
+      server: ["coffee:dist", "jade:dev", "less:dev"]
+      test: ["coffee"]
+      dist: ["coffee", "imagemin", "svgmin", "htmlmin"]
 
     karma:
       unit:
@@ -253,7 +259,6 @@ module.exports = (grunt) ->
     return grunt.task.run(["build", "open", "connect:dist:keepalive"])  if target is "dist"
     grunt.task.run [
       "clean:server",
-      "recess",
       "concurrent:server",
       "connect:livereload",
       "open",
