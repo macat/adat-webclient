@@ -204,7 +204,6 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>"
         ]
 
-    
     # Put files not handled in other tasks here
     copy:
       dist:
@@ -220,6 +219,17 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>/images"
           src: ["generated/*"]
         ]
+
+    jade:
+      dev:
+        options:
+          pretty: true
+          data:
+            debug: true
+            blabla: 'ok!!!'
+        files:
+          "<%= yeoman.dist %>/main.html": "app/index.jade"
+
 
     concurrent:
       server: ["coffee:dist", "compass:server"]
