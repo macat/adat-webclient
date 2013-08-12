@@ -1,10 +1,9 @@
-'use strict'
+app = angular.module('adminApp', [])
 
-angular.module('webClientApp', [])
-  .config ($routeProvider) ->
-    $routeProvider
-      .when '/',
-        templateUrl: 'views/main.html'
-        controller: 'MainCtrl'
-      .otherwise
-        redirectTo: '/'
+app.config ($routeProvider) ->
+  app.apiUrl = $('body').data('api')
+  $routeProvider
+    .when '/',
+      controller: 'IndexCtrl'
+    .otherwise
+      redirectTo: '/'
