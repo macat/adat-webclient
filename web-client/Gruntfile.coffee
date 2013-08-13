@@ -34,8 +34,8 @@ module.exports = (grunt) ->
         tasks: ["coffee:test"]
 
       jade:
-        files: ["<%= yeoman.app %>/{,*/}*.jade"]
-        tasks: ["jade"]
+        files: ["<%= yeoman.app %>/**/*.jade"]
+        tasks: ["jade:dev"]
 
       recess:
         files: ['<%= yeoman.app %>/styles/{,*/}*.less']
@@ -93,6 +93,8 @@ module.exports = (grunt) ->
 
     coffee:
       dist:
+        options:
+          bare: true
         files: [
           expand: true
           cwd: "<%= yeoman.app %>/scripts"
@@ -210,7 +212,7 @@ module.exports = (grunt) ->
           pretty: true
           data:
             debug: true
-            blabla: 'ok!!!'
+            apiUrl: '//localhost:9000'
         files:[
           dest: "tmp/index.html"
           src: ["app/index.jade"]
