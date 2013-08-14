@@ -5,5 +5,7 @@ app.config ($routeProvider) ->
   $routeProvider
     .when '/',
       controller: 'IndexCtrl'
+    .when '/login',
+      controller: 'LoginCtrl'
     .otherwise
       redirectTo: '/'

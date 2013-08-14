@@ -20,9 +20,11 @@ html
         .col-lg-3
           .navbar
             a.navbar-brand(href="/") Admin
+          div(ng-controller="WhoamiCtrl")
           include views/menu.jade
         .col-lg-9
           include views/users.jade
+          include views/login.jade
 
 
     script(src="bower_components/jquery/jquery.js")
@@ -47,4 +49,6 @@ html
     script(src="scripts/controllers/index.js")
     script(src="scripts/controllers/menu.js")
     script(src="scripts/controllers/users.js")
+    script(src="scripts/controllers/whoami.js")
+    script(src="scripts/controllers/login.js")
 
