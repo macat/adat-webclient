@@ -1,0 +1,11 @@
+.row(ng-controller="LoginCtrl")
+  form.col-lg-4
+    fieldset
+      legend Login to Admin
+      .form-group
+        input.form-control(type="text", name="email", placeholder="Email", ng-model="auth.email")
+      .form-group
+        input.form-control(type="text", name="password", placeholder="Password", ng-model="auth.password")
+      .form-group
+        button.btn.btn-default(type="button", ng-click="signin()") Sign in
+
