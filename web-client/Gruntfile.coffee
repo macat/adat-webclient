@@ -213,9 +213,17 @@ module.exports = (grunt) ->
           data:
             debug: true
             apiUrl: '//localhost:9000'
-        files:[
-          dest: "tmp/index.html"
-          src: ["app/index.jade"]
+            assetsUrl: '//localhost:8000'
+        files:[ {
+            dest: "tmp/index.html"
+            src: ["app/index.jade"]
+          }, {
+            expand: true,
+            src: ["*"]
+            cwd: "app/views"
+            dest: "tmp/views/"
+            ext: ".html"
+          }
         ]
     less:
       dev:

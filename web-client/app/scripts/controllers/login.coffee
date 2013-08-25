@@ -1,11 +1,10 @@
 
 
-app.controller 'LoginCtrl', ['$scope', '$http', '$location', ($scope, $http, $location) ->
+app.controller 'LoginCtrl', ['$scope', '$location', 'session', ($scope, $location, session) ->
   $scope.auth = {}
+  $scope.user = session.user
   $scope.signin = ->
-    $http.post("#{ app.apiUrl }/login", $scope.auth,
-               {headers: {'Content-Type': 'application/json'}})
-         .success (data, status, headers, config)->
-           alert('ok')
-    
+    session.login($scope.auth.email, $scope.auth.password)
+           .then (user) ->
+             $location.path '/'
 ]
