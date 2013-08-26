@@ -7,46 +7,38 @@ html
     meta(name="description", content="")
     meta(name="viewport", content="width=device-width")
 
-    link(rel="stylesheet", href="styles/main.css")
+    link(rel="stylesheet", href="#{ assetsUrl }/styles/main.css")
   body(ng-app="adminApp", data-api=apiUrl)
     //[if lt IE 9]
       script(src="bower_components/es5-shim/es5-shim.js")
       script(src="bower_components/json3/lib/json3.min.js")
     //[endif]
 
+    #layout.pure-g
+      #nav.pure-u
+        div(ng-controller="WhoamiCtrl")
+          span(ng-if="user") {{ user.name }}
+          span.pure-button.pure-button-xsmall(ng-click="logout()", ng-if="user")
+            | Logout
 
-    .container
-      .row
-        .col-lg-3
-          .navbar
-            a.navbar-brand(href="/") Admin
-          div(ng-controller="WhoamiCtrl")
-            span {{ user.name }}
-          include views/menu.jade
-        .col-lg-9
-          ng-view
+        include views/menu.jade
+      #main.pure-u-1
+        ng-view
 
 
     script(src="#{ assetsUrl }/bower_components/jquery/jquery.js")
     script(src="#{ assetsUrl }/bower_components/angular/angular.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/affix.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/alert.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/dropdown.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/tooltip.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/modal.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/transition.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/button.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/popover.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/carousel.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/scrollspy.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/collapse.js")
-    script(src="#{ assetsUrl }/bower_components/bootstrap/js/tab.js")
     script(src="#{ assetsUrl }/bower_components/angular-resource/angular-resource.js")
+    script(src="#{ assetsUrl }/bower_components/angular-route/angular-route.js")
     script(src="#{ assetsUrl }/bower_components/angular-cookies/angular-cookies.js")
-    script(src="#{ assetsUrl }/bower_components/angular-sanitize/angular-sanitize.js")
+    script(src="#{ assetsUrl }/bower_components/underscore/underscore.js")
+    script(src="#{ assetsUrl }/bower_components/restangular/dist/restangular.js")
     script(src="#{ assetsUrl }/scripts/app.js")
     script(src="#{ assetsUrl }/scripts/services/session.js")
+    script(src="#{ assetsUrl }/scripts/services/page.js")
     script(src="#{ assetsUrl }/scripts/controllers/index.js")
+    script(src="#{ assetsUrl }/scripts/controllers/page.js")
+    script(src="#{ assetsUrl }/scripts/controllers/new_page.js")
     script(src="#{ assetsUrl }/scripts/controllers/menu.js")
     script(src="#{ assetsUrl }/scripts/controllers/users.js")
     script(src="#{ assetsUrl }/scripts/controllers/whoami.js")

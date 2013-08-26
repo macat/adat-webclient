@@ -1,11 +1,9 @@
-.row(ng-controller="LoginCtrl", ng-if="!user")
-  form.col-lg-4
+.row(ng-controller="LoginCtrl")
+  form.pure-form
     fieldset
-      legend Login to Admin
-      .form-group
-        input.form-control(type="text", name="email", placeholder="Email", ng-model="auth.email")
-      .form-group
-        input.form-control(type="password", name="password", placeholder="Password", ng-model="auth.password")
-      .form-group
-        button.btn.btn-default(type="button", ng-click="signin()") Sign in
+      legend Login
+      .pure-group
+        input#email.pure-input-1-2(type="text", name="email", placeholder="Email", ng-model="auth.email")
+        input#password.pure-input-1-2(type="password", name="password", placeholder="Password", ng-model="auth.password")
+      button.pure-button.pure-button-primary.pure-input-1-2(type="button", ng-click="signin()") Sign in
 
