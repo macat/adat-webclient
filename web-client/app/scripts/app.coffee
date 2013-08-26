@@ -9,6 +9,9 @@ app.config ($routeProvider, $locationProvider) ->
     .when '/login',
       controller: 'LoginCtrl'
       templateUrl: '/views/login.html'
+    .when '/p/new/:category',
+      controller: 'NewPageCtrl',
+      templateUrl: '/views/page.html'
     .when '/p/:id',
       controller: 'PageCtrl',
       templateUrl: '/views/page.html'

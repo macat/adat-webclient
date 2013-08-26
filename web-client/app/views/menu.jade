@@ -3,8 +3,9 @@ div(ng-controller="MenuCtrl")
   h3#title
     a(href="/") ADAT BOSS
   .pure-menu.pure-menu-open(ng-repeat="category in categories")
-    .pure-menu-heading {{ category.title }}
+    .pure-menu-heading {{ category }}
+      i.add.icon-plus(ng-click="addPage(category)")
     ul
-      li(ng-repeat="dashboard in category.dashboards")
-        a(href="#/p/{{dashboard.id}}") {{ dashboard.title }}
+      li(ng-repeat="page in pageList | filter:{category: category}")
+        a(href="#/p/{{page.id}}") {{ page.title }}
 

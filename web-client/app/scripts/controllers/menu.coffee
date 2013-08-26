@@ -1,21 +1,27 @@
 
 
-app.controller 'MenuCtrl', ($scope, session, Restangular) ->
-  dashboards = Restangular.all('dashboards')
+app.controller 'MenuCtrl', ($scope, $location, session, Page) ->
 
-  setMenuItems = ->
-    if session.isLoggedIn()
-      $scope.categories = dashboards.getList()
-    else
-      $scope.categories = [{
-        title: "",
-        dashboards: {
-          category: "",
-          position: 0,
-          slug: "help",
-          title: "Help"
-        }
-      }]
+  $scope.categories = []
+  if session.isLoggedIn()
+    Page.pages.getList().then (pageList) ->
+      $scope.pageList = pageList
 
-  $scope.$on('sessionChange', setMenuItems)
-  setMenuItems()
+      _.each pageList, (page) ->
+        if !_.contains $scope.categories, page.category
+          $scope.categories.push page.category
+
+
+  else
+    $scope.pageList = [
+      {
+        category: "",
+        position: 0,
+        id: 'help',
+        title: "Help"
+      }
+    ]
+
+  $scope.addPage = (category) ->
+    $location.path "/p/new/#{ category }"
+

@@ -201,6 +201,13 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>/images"
           src: ["generated/*"]
         ]
+      dev:
+        files: [
+            cwd: "app/bower_components/font-awesome/font"
+            expand: true
+            src: ["*"]
+            dest: "tmp/fonts/"
+        ]
 
     jade:
       dev:
@@ -265,6 +272,7 @@ module.exports = (grunt) ->
     return grunt.task.run(["build", "connect:dist:keepalive"])  if target is "dist"
     grunt.task.run [
       "clean:server",
+      "copy:dev",
       "concurrent:server",
       "connect:livereload",
       "watch"]
