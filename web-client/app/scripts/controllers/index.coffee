@@ -1,5 +1,2 @@
 
-app.controller 'IndexCtrl', ['$scope', 'session', ($scope, session) ->
-  
-]
-
+app.controller 'IndexCtrl', ($scope, session) ->
