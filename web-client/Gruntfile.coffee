@@ -72,10 +72,6 @@ module.exports = (grunt) ->
           middleware: (connect) ->
             [mountFolder(connect, yeomanConfig.dist)]
 
-    open:
-      server:
-        url: "http://localhost:<%= connect.options.port %>"
-
     clean:
       dist:
         files: [
@@ -117,7 +113,7 @@ module.exports = (grunt) ->
         options:
           compile: true
         files:
-          '<%= yeoman.app %>/styles/main.css': ['<%= yeoman.app %>/styles/main.less']
+          'tmp/styles/main.css': ['<%= yeoman.app %>/styles/main.less']
     # not used since Uglify task does concat,
     # but still available if needed
     #concat: {
@@ -266,12 +262,11 @@ module.exports = (grunt) ->
           "<%= yeoman.dist %>/scripts/scripts.js": ["<%= yeoman.dist %>/scripts/scripts.js"]
 
   grunt.registerTask "server", (target) ->
-    return grunt.task.run(["build", "open", "connect:dist:keepalive"])  if target is "dist"
+    return grunt.task.run(["build", "connect:dist:keepalive"])  if target is "dist"
     grunt.task.run [
       "clean:server",
       "concurrent:server",
       "connect:livereload",
-      "open",
       "watch"]
 
   grunt.registerTask "test", ["clean:server", "concurrent:test", "connect:test", "karma"]

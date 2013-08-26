@@ -1,6 +1,10 @@
 
 div(ng-controller="MenuCtrl")
-  ul.nav.nav-pills.nav-stacked
-    li(ng-repeat="menu in menuList")
-      a(href="/") {{menu}}
+  h3#title
+    a(href="/") ADAT BOSS
+  .pure-menu.pure-menu-open(ng-repeat="category in categories")
+    .pure-menu-heading {{ category.title }}
+    ul
+      li(ng-repeat="dashboard in category.dashboards")
+        a(href="#/p/{{dashboard.id}}") {{ dashboard.title }}
 

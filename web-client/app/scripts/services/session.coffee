@@ -1,13 +1,17 @@
 
 
-app.factory 'session', ['$http', '$q', '$cookies', '$timeout', ($http, $q, $cookies, $timeout) ->
+app.factory 'session', ($rootScope, $http, $q, $cookies, $timeout) ->
   user = null
 
   fetchUser = (userId, deferred) ->
     $http({method: 'GET', url: "#{ app.apiUrl}/users/#{ userId }"}).
-      success (data, status) ->
+      then (data, status) ->
         user = data
         deferred.resolve(data) if deferred
+      , ->
+        user = null
+        delete $cookies.uid
+        deferred.reject() if deferred
 
   if uid = $cookies.uid
     user = {id: uid}
@@ -24,6 +28,9 @@ app.factory 'session', ['$http', '$q', '$cookies', '$timeout', ($http, $q, $cook
         if data.id
           fetchUser(data.id, deferred)
         else
+          $rootScope.$broadcast('sessionChange')
+          user = null
+          delete $cookies.uid
           deferred.reject()
 
     deferred.promise
@@ -36,21 +43,23 @@ app.factory 'session', ['$http', '$q', '$cookies', '$timeout', ($http, $q, $cook
 
     $http.post("#{ app.apiUrl }/login", {email: email, password: password},
                {headers: {'Content-Type': 'application/json'}})
-         .success (data, status, headers, config) ->
-           if data.success
-             fetchUser(data.id, deferred)
-           else
-             deferred.reject()
+        .success (data, status, headers, config) ->
+          if data.success
+            $rootScope.$broadcast('sessionChange')
+            fetchUser(data.id, deferred)
+          else
+            deferred.reject()
 
     deferred.promise
   logout: ->
     deferred = $q.defer()
     $http.post("#{ app.apiUrl }/logout", {},
                {headers: {'Content-Type': 'application/json'}})
-         .success (data, status, headers, config) ->
-           user = null
-           deferred.resolve()
+        .success (data, status, headers, config) ->
+          $rootScope.$broadcast('sessionChange')
+          user = null
+          delete $cookies.uid
+          deferred.resolve()
 
     deferred.promise
 
-]
