@@ -1,0 +1,12 @@
+.row
+  <form class="pure-form" {{action "login" on="submit"}}>
+  fieldset
+    legend Login
+    .pure-group
+      {{#if loginFailed}}
+      div.alert" Invalid username or password.
+      {{/if}}
+      {{input value=username type="text"}}
+      {{input value=password type="password"}}
+    <button class="pure-button pure-button-primary pure-input-1-2" type="button" {{bindAttr disabled="isProcessing"}}> Sign in </button>
+  </form>

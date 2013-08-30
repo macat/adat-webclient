@@ -1,0 +1,17 @@
+
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container-fluid
+      .brand
+        Your App
+.container-fluid#main
+  .row-fluid
+      .span3
+        .well.sidebar-nav
+          span.nav-header Colors
+          ul.nav nav-list
+            {{#each item in controller}}
+            li {{item}}
+            {{/each}}
+      .span9
+        {{outlet}}

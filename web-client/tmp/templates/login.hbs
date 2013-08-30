@@ -1,0 +1,11 @@
+
+<div class="row"><form class="pure-form" {{action "login" on="submit"}}>
+  <fieldset>
+    <legend>Login</legend>
+    <div class="pure-group">{{#if loginFailed}}
+      <div class="alert">" Invalid username or password.</div>{{/if}}
+      {{input value=username type="text"}}
+      {{input value=password type="password"}}
+    </div><button class="pure-button pure-button-primary pure-input-1-2" type="button" {{bindAttr disabled="isProcessing"}}> Sign in </button>
+  </fieldset></form>
+</div>
