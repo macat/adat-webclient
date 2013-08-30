@@ -1,7 +1,7 @@
 (function() {
-  var WebClient;
+  var App;
 
-  WebClient = window.WebClient = Ember.Application.create();
+  App = window.App = Ember.Application.create();
 
   require('scripts/controllers/*');
 

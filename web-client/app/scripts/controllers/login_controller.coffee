@@ -1,16 +1,23 @@
-App.LoginController = Ember.Controller.extend(
+App.LoginController = Ember.ObjectController.extend
   loginFailed: false
   isProcessing: false
-  isSlowConnection: false
-  timeout: null
-  login: ->
-    @setProperties
-      loginFailed: false
-      isProcessing: true
+  email: ''
+  password: ''
 
-    @set "timeout", setTimeout(@slowConnection.bind(this), 1)
-    request = $.post("/login", @getProperties("username", "password"))
-    request.then @success.bind(this), @failure.bind(this)
+  actions:
+    test: ->
+      alert('hello')
+    login: ->
+      @setProperties
+        loginFailed: false
+        isProcessing: true
+
+      request = $.ajax("/login",
+        data: JSON.stringify(@getProperties("email", "password"))
+        contentType : 'application/json'
+        type : 'POST'
+      )
+      request.then @success.bind(@), @failure.bind(@)
 
   success: ->
     @reset()
@@ -20,13 +27,6 @@ App.LoginController = Ember.Controller.extend(
     @reset()
     @set "loginFailed", true
 
-  slowConnection: ->
-    @set "isSlowConnection", true
-
   reset: ->
-    clearTimeout @get("timeout")
-    @setProperties
-      isProcessing: false
-      isSlowConnection: false
+    @setProperties isProcessing: false
 
-)

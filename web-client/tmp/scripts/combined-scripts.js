@@ -1,24 +1,32 @@
 (function() {
-  var WebClient;
+  var App;
 
-  WebClient = window.WebClient = Ember.Application.create();
+  App = window.App = Ember.Application.create();
 
 
 (function() {
-  App.LoginController = Ember.Controller.extend({
+  App.LoginController = Ember.ObjectController.extend({
     loginFailed: false,
     isProcessing: false,
-    isSlowConnection: false,
-    timeout: null,
-    login: function() {
-      var request;
-      this.setProperties({
-        loginFailed: false,
-        isProcessing: true
-      });
-      this.set("timeout", setTimeout(this.slowConnection.bind(this), 1));
-      request = $.post("/login", this.getProperties("username", "password"));
-      return request.then(this.success.bind(this), this.failure.bind(this));
+    email: '',
+    password: '',
+    actions: {
+      test: function() {
+        return alert('hello');
+      },
+      login: function() {
+        var request;
+        this.setProperties({
+          loginFailed: false,
+          isProcessing: true
+        });
+        request = $.ajax("/login", {
+          data: JSON.stringify(this.getProperties("email", "password")),
+          contentType: 'application/json',
+          type: 'POST'
+        });
+        return request.then(this.success.bind(this), this.failure.bind(this));
+      }
     },
     success: function() {
       return this.reset();
@@ -27,14 +35,9 @@
       this.reset();
       return this.set("loginFailed", true);
     },
-    slowConnection: function() {
-      return this.set("isSlowConnection", true);
-    },
     reset: function() {
-      clearTimeout(this.get("timeout"));
       return this.setProperties({
-        isProcessing: false,
-        isSlowConnection: false
+        isProcessing: false
       });
     }
   });
@@ -43,15 +46,76 @@
 
 
 (function() {
-  WebClient.Store = DS.Store.extend({
-    adapter: DS.FixtureAdapter.create()
+  App.UserController = Ember.ObjectController.extend;
+
+}).call(this);
+
+
+(function() {
+  App.UserController = Ember.ArrayController.extend;
+
+}).call(this);
+
+
+(function() {
+  App.Store = DS.Store.extend({});
+
+}).call(this);
+
+
+(function() {
+  App.User = DS.Model.extend({
+    createdAt: DS.attr('string'),
+    email: DS.attr('string'),
+    name: DS.attr('string')
   });
 
 }).call(this);
 
 
 (function() {
-  WebClient.ApplicationRoute = Ember.Route.extend;
+
+
+}).call(this);
+
+
+(function() {
+  App.AuthenticatedRoute = Ember.Route.extend({
+    redirectToLogin: function(transition) {
+      var loginController;
+      loginController = this.controllerFor('login');
+      loginController.set('attemptedTransition', transition);
+      return this.transitionTo('login');
+    }
+  });
+
+}).call(this);
+
+
+(function() {
+  App.UsersRoute = App.AuthenticatedRoute.extend({
+    model: function() {
+      return App.User.find();
+    }
+  });
+
+  App.UserRoute = App.AuthenticatedRoute.extend({
+    model: function(params) {
+      return App.User.find(params.id);
+    }
+  });
+
+}).call(this);
+
+
+(function() {
+  App.Router.map(function() {
+    this.route("login");
+    this.resource("users");
+    return this.resource("user", {
+      path: 'users/:id'
+    });
+  });
 
 }).call(this);
 

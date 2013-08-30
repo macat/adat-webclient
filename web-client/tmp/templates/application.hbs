@@ -1,24 +1,5 @@
 
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <div class="brand">
-        <Your>App</Your>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="main" class="container-fluid">
-  <div class="row-fluid">
-    <div class="span3">
-      <div class="well sidebar-nav"><span class="nav-header">Colors</span>
-        <ul class="nav">
-          nav-list
-          {{#each item in controller}}
-          <li>{{item}}</li>{{/each}}
-        </ul>
-      </div>
-    </div>
-    <div class="span9">{{outlet}}</div>
-  </div>
+<div id="layout" class="pure-g">
+  <div id="nav" class="pure-u"></div>
+  <div id="main" class="pure-u-1">{{outlet}}</div>
 </div>

@@ -1,18 +1,26 @@
 (function() {
-  App.LoginController = Ember.Controller.extend({
+  App.LoginController = Ember.ObjectController.extend({
     loginFailed: false,
     isProcessing: false,
-    isSlowConnection: false,
-    timeout: null,
-    login: function() {
-      var request;
-      this.setProperties({
-        loginFailed: false,
-        isProcessing: true
-      });
-      this.set("timeout", setTimeout(this.slowConnection.bind(this), 1));
-      request = $.post("/login", this.getProperties("username", "password"));
-      return request.then(this.success.bind(this), this.failure.bind(this));
+    email: '',
+    password: '',
+    actions: {
+      test: function() {
+        return alert('hello');
+      },
+      login: function() {
+        var request;
+        this.setProperties({
+          loginFailed: false,
+          isProcessing: true
+        });
+        request = $.ajax("/login", {
+          data: JSON.stringify(this.getProperties("email", "password")),
+          contentType: 'application/json',
+          type: 'POST'
+        });
+        return request.then(this.success.bind(this), this.failure.bind(this));
+      }
     },
     success: function() {
       return this.reset();
@@ -21,14 +29,9 @@
       this.reset();
       return this.set("loginFailed", true);
     },
-    slowConnection: function() {
-      return this.set("isSlowConnection", true);
-    },
     reset: function() {
-      clearTimeout(this.get("timeout"));
       return this.setProperties({
-        isProcessing: false,
-        isSlowConnection: false
+        isProcessing: false
       });
     }
   });

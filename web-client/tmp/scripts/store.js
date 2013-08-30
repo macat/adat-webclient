@@ -1,6 +1,4 @@
 (function() {
-  WebClient.Store = DS.Store.extend({
-    adapter: DS.FixtureAdapter.create()
-  });
+  App.Store = DS.Store.extend({});
 
 }).call(this);

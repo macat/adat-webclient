@@ -1,3 +1,0 @@
-WebClient.Router.map(function () {
-  
-});
