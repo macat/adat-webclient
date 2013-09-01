@@ -198,6 +198,14 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>"
           src: ["*.{ico,txt}", ".htaccess", "images/{,*/}*.{webp,gif}", "styles/fonts/*"]
         ]
+      dev:
+        files: [
+            cwd: "app/bower_components/font-awesome/font"
+            expand: true
+            src: ["*"]
+            dest: "tmp/fonts/"
+        ]
+
 
     jade:
       dev:
@@ -209,9 +217,9 @@ module.exports = (grunt) ->
             assetsUrl: '//localhost:8000'
         files: [
             expand: true,
-            src: ["*"]
-            cwd: "app/templates"
-            dest: "tmp/templates/"
+            src: ["templates/**/*.jade"]
+            cwd: "app/"
+            dest: "tmp/"
             ext: ".hbs"
         ]
 
@@ -257,7 +265,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run ["clean:server", "concurrent:server", "neuter:app", "connect:livereload", "watch"]
+    grunt.task.run ["clean:server", "copy:dev", "concurrent:server", "neuter:app", "connect:livereload", "watch"]
 
   grunt.registerTask "test", ["clean:server", "concurrent:test", "connect:test", "neuter:app", "mocha"]
   grunt.registerTask "build", ["clean:dist", "useminPrepare", "concurrent:dist", "neuter:app", "concat", "cssmin", "uglify", "copy", "rev", "usemin"]

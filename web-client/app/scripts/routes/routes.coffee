@@ -1,7 +1,5 @@
-App.UsersRoute = App.AuthenticatedRoute.extend
-  model: ->
-    App.User.find()
+App.IndexRoute = App.ApplicationRoute.extend()
 
-App.UserRoute = App.AuthenticatedRoute.extend
-  model: (params) ->
-    App.User.find(params.id)
+App.UsersRoute = App.ApplicationRoute.extend()
+
+App.UserRoute = App.ApplicationRoute.extend()
