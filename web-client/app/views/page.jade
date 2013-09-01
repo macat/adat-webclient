@@ -1,8 +1,0 @@
-
-.edit(ng-if="editmode")
-  form.pure-form
-    input(ng-model="page.title")
-    button.pure-button(ng-click="save()") Save
-.normal(ng-if="!editmode")
-  h1 {{ page.title }}
-  p {{ page.slug }}

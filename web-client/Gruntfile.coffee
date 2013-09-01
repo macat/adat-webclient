@@ -1,5 +1,5 @@
+"use strict"
 LIVERELOAD_PORT = 35729
-
 lrSnippet = require("connect-livereload")(port: LIVERELOAD_PORT)
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
@@ -8,23 +8,25 @@ mountFolder = (connect, dir) ->
 # # Globbing
 # for performance reasons we're only matching one level down:
 # 'test/spec/{,*/}*.js'
-# use this if you want to recursively match all subfolders:
+# use this if you want to match all subfolders:
 # 'test/spec/**/*.js'
 module.exports = (grunt) ->
-
+  # show elapsed time at the end
+  require("time-grunt") grunt
   # load all grunt tasks
-  require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
-
+  require("load-grunt-tasks") grunt
   # configurable paths
   yeomanConfig =
     app: "app"
     dist: "dist"
 
-  try
-    yeomanConfig.app = require("./bower.json").appPath or yeomanConfig.app
   grunt.initConfig
     yeoman: yeomanConfig
     watch:
+      emberTemplates:
+        files: "<%= yeoman.app %>/templates/**/*.hbs"
+        tasks: ["emberTemplates"]
+
       coffee:
         files: ["<%= yeoman.app %>/scripts/{,*/}*.coffee"]
         tasks: ["coffee:dist"]
@@ -35,26 +37,28 @@ module.exports = (grunt) ->
 
       jade:
         files: ["<%= yeoman.app %>/**/*.jade"]
-        tasks: ["jade:dev"]
+        tasks: ["templates"]
 
-      recess:
-        files: ['<%= yeoman.app %>/styles/{,*/}*.less']
-        tasks: ['recess']
+      neuter:
+        files: ["tmp/scripts/{,*/}*.js", "!tmp/scripts/combined-scripts.js"]
+        tasks: ["neuter"]
 
       livereload:
         options:
           livereload: LIVERELOAD_PORT
 
         files: [
+          "tmp/scripts/*.js",
           "<%= yeoman.app %>/{,*/}*.jade",
+          "<%= yeoman.app %>/*.html",
           "{tmp,<%= yeoman.app %>}/styles/{,*/}*.css",
-          "{tmp,<%= yeoman.app %>}/scripts/{,*/}*.js",
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
 
     connect:
       options:
         port: 8000
-        # Change this to '0.0.0.0' to access the server from outside.
+
+        # change this to '0.0.0.0' to access the server from outside
         hostname: "localhost"
 
       livereload:
@@ -85,12 +89,16 @@ module.exports = (grunt) ->
       options:
         jshintrc: ".jshintrc"
 
-      all: ["Gruntfile.js", "<%= yeoman.app %>/scripts/{,*/}*.js"]
+      all: ["Gruntfile.js", "<%= yeoman.app %>/scripts/{,*/}*.js", "!<%= yeoman.app %>/scripts/vendor/*", "test/spec/{,*/}*.js"]
+
+    mocha:
+      all:
+        options:
+          run: true
+          urls: ["http://localhost:<%= connect.options.port %>/index.html"]
 
     coffee:
       dist:
-        options:
-          bare: true
         files: [
           expand: true
           cwd: "<%= yeoman.app %>/scripts"
@@ -108,21 +116,22 @@ module.exports = (grunt) ->
           ext: ".js"
         ]
 
-    recess:
-      dist:
-        options:
-          compile: true
-        files:
-          'tmp/styles/main.css': ['<%= yeoman.app %>/styles/main.less']
     # not used since Uglify task does concat,
     # but still available if needed
     #concat: {
-    #      dist: {}
-    #    },
+    #            dist: {}
+    #        },
+    
+    # not enabled since usemin task does concat and uglify
+    # check index.html to edit your build targets
+    # enable this task if you prefer defining your build targets here
+    #uglify: {
+    #            dist: {}
+    #        },
     rev:
       dist:
         files:
-          src: ["<%= yeoman.dist %>/scripts/{,*/}*.js", "<%= yeoman.dist %>/styles/{,*/}*.css", "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}", "<%= yeoman.dist %>/styles/fonts/*"]
+          src: ["<%= yeoman.dist %>/scripts/{,*/}*.js", "<%= yeoman.dist %>/styles/{,*/}*.css", "<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}", "<%= yeoman.dist %>/styles/fonts/*"]
 
     useminPrepare:
       html: "<%= yeoman.app %>/index.html"
@@ -153,39 +162,32 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>/images"
         ]
 
-    cssmin: {}
-    
-    # By default, your `index.html` <!-- Usemin Block --> will take care of
-    # minification. This option is pre-configured if you do not wish to use
-    # Usemin blocks.
-    # dist: {
-    #   files: {
-    #     '<%= yeoman.dist %>/styles/main.css': [
-    #       'tmp/styles/{,*/}*.css',
-    #       '<%= yeoman.app %>/styles/{,*/}*.css'
-    #     ]
-    #   }
-    # }
+    cssmin:
+      dist:
+        files:
+          "<%= yeoman.dist %>/styles/main.css": ["tmp/styles/{,*/}*.css", "<%= yeoman.app %>/styles/{,*/}*.css"]
+
     htmlmin:
       dist:
         options: {}
         
         #removeCommentsFromCDATA: true,
-        #          // https://github.com/yeoman/grunt-usemin/issues/44
-        #          //collapseWhitespace: true,
-        #          collapseBooleanAttributes: true,
-        #          removeAttributeQuotes: true,
-        #          removeRedundantAttributes: true,
-        #          useShortDoctype: true,
-        #          removeEmptyAttributes: true,
-        #          removeOptionalTags: true
+        #                    // https://github.com/yeoman/grunt-usemin/issues/44
+        #                    //collapseWhitespace: true,
+        #                    collapseBooleanAttributes: true,
+        #                    removeAttributeQuotes: true,
+        #                    removeRedundantAttributes: true,
+        #                    useShortDoctype: true,
+        #                    removeEmptyAttributes: true,
+        #                    removeOptionalTags: true
         files: [
           expand: true
           cwd: "<%= yeoman.app %>"
-          src: ["*.html", "views/*.html"]
+          src: "*.html"
           dest: "<%= yeoman.dist %>"
         ]
 
+    
     # Put files not handled in other tasks here
     copy:
       dist:
@@ -194,12 +196,7 @@ module.exports = (grunt) ->
           dot: true
           cwd: "<%= yeoman.app %>"
           dest: "<%= yeoman.dist %>"
-          src: ["*.{ico,png,txt}", ".htaccess", "bower_components/**/*", "images/{,*/}*.{gif,webp}", "styles/fonts/*"]
-        ,
-          expand: true
-          cwd: "tmp/images"
-          dest: "<%= yeoman.dist %>/images"
-          src: ["generated/*"]
+          src: ["*.{ico,txt}", ".htaccess", "images/{,*/}*.{webp,gif}", "styles/fonts/*"]
         ]
       dev:
         files: [
@@ -209,6 +206,7 @@ module.exports = (grunt) ->
             dest: "tmp/fonts/"
         ]
 
+
     jade:
       dev:
         options:
@@ -217,17 +215,14 @@ module.exports = (grunt) ->
             debug: true
             apiUrl: '//localhost:9000'
             assetsUrl: '//localhost:8000'
-        files:[ {
-            dest: "tmp/index.html"
-            src: ["app/index.jade"]
-          }, {
+        files: [
             expand: true,
-            src: ["*"]
-            cwd: "app/views"
-            dest: "tmp/views/"
-            ext: ".html"
-          }
+            src: ["templates/**/*.jade"]
+            cwd: "app/"
+            dest: "tmp/"
+            ext: ".hbs"
         ]
+
     less:
       dev:
         options:
@@ -238,45 +233,41 @@ module.exports = (grunt) ->
           src: ["app/styles/main.less"]
         ]
 
-
-
     concurrent:
-      server: ["coffee:dist", "jade:dev", "less:dev"]
-      test: ["coffee"]
-      dist: ["coffee", "imagemin", "svgmin", "htmlmin"]
+      server: ["templates", "coffee:dist"]
+      test: ["templates", "coffee"]
+      dist: ["templates", "coffee", "imagemin", "svgmin", "htmlmin"]
+
 
     karma:
       unit:
         configFile: "karma.conf.js"
-        singleRun: true
 
-    cdnify:
-      dist:
-        html: ["<%= yeoman.dist %>/*.html"]
+    emberTemplates:
+      options:
+        templateName: (sourceFile) ->
+          templatePath = "tmp/templates/"
+          sourceFile.replace templatePath, ""
 
-    ngmin:
-      dist:
-        files: [
-          expand: true
-          cwd: "<%= yeoman.dist %>/scripts"
-          src: "*.js"
-          dest: "<%= yeoman.dist %>/scripts"
-        ]
-
-    uglify:
       dist:
         files:
-          "<%= yeoman.dist %>/scripts/scripts.js": ["<%= yeoman.dist %>/scripts/scripts.js"]
+          "tmp/scripts/compiled-templates.js": "tmp/templates/{,*/}*.hbs"
+
+    neuter:
+      app:
+        options:
+          template: "{%= src %}"
+          filepathTransform: (filepath) ->
+            "tmp/" + filepath
+
+        src: ["tmp/scripts/app.js"]
+        dest: "tmp/scripts/combined-scripts.js"
 
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run [
-      "clean:server",
-      "copy:dev",
-      "concurrent:server",
-      "connect:livereload",
-      "watch"]
+    grunt.task.run ["clean:server", "copy:dev", "concurrent:server", "neuter:app", "connect:livereload", "watch"]
 
-  grunt.registerTask "test", ["clean:server", "concurrent:test", "connect:test", "karma"]
-  grunt.registerTask "build", ["clean:dist", "useminPrepare", "concurrent:dist", "concat", "copy", "cdnify", "ngmin", "cssmin", "uglify", "rev", "usemin"]
+  grunt.registerTask "test", ["clean:server", "concurrent:test", "connect:test", "neuter:app", "mocha"]
+  grunt.registerTask "build", ["clean:dist", "useminPrepare", "concurrent:dist", "neuter:app", "concat", "cssmin", "uglify", "copy", "rev", "usemin"]
   grunt.registerTask "default", ["jshint", "test", "build"]
+  grunt.registerTask "templates", ["jade:dev", "emberTemplates"]
