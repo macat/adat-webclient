@@ -1,8 +1,5 @@
 App.ApplicationController = Ember.ObjectController.extend
   dashboards: (->
-    App.Dashboard.find()
+    @store.find('dashboard')
   ).property()
 
-  categories: (->
-    @get('dashboards').mapProperty('category').uniq()
-  ).property()

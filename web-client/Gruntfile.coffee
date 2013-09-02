@@ -35,10 +35,6 @@ module.exports = (grunt) ->
         files: ["test/spec/{,*/}*.coffee"]
         tasks: ["coffee:test"]
 
-      jade:
-        files: ["<%= yeoman.app %>/**/*.jade"]
-        tasks: ["templates"]
-
       neuter:
         files: ["tmp/scripts/{,*/}*.js", "!tmp/scripts/combined-scripts.js"]
         tasks: ["neuter"]
@@ -49,7 +45,6 @@ module.exports = (grunt) ->
 
         files: [
           "tmp/scripts/*.js",
-          "<%= yeoman.app %>/{,*/}*.jade",
           "<%= yeoman.app %>/*.html",
           "{tmp,<%= yeoman.app %>}/styles/{,*/}*.css",
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
@@ -206,23 +201,6 @@ module.exports = (grunt) ->
             dest: "tmp/fonts/"
         ]
 
-
-    jade:
-      dev:
-        options:
-          pretty: true
-          data:
-            debug: true
-            apiUrl: '//localhost:9000'
-            assetsUrl: '//localhost:8000'
-        files: [
-            expand: true,
-            src: ["templates/**/*.jade"]
-            cwd: "app/"
-            dest: "tmp/"
-            ext: ".hbs"
-        ]
-
     less:
       dev:
         options:
@@ -234,9 +212,9 @@ module.exports = (grunt) ->
         ]
 
     concurrent:
-      server: ["templates", "coffee:dist"]
-      test: ["templates", "coffee"]
-      dist: ["templates", "coffee", "imagemin", "svgmin", "htmlmin"]
+      server: ["emberTemplates", "coffee:dist"]
+      test: ["emberTemplates", "coffee"]
+      dist: ["emberTemplates", "coffee", "imagemin", "svgmin", "htmlmin"]
 
 
     karma:
@@ -246,12 +224,12 @@ module.exports = (grunt) ->
     emberTemplates:
       options:
         templateName: (sourceFile) ->
-          templatePath = "tmp/templates/"
+          templatePath = "app/templates/"
           sourceFile.replace templatePath, ""
 
       dist:
         files:
-          "tmp/scripts/compiled-templates.js": "tmp/templates/{,*/}*.hbs"
+          "tmp/scripts/compiled-templates.js": "app/templates/{,*/}*.hbs"
 
     neuter:
       app:
@@ -270,4 +248,3 @@ module.exports = (grunt) ->
   grunt.registerTask "test", ["clean:server", "concurrent:test", "connect:test", "neuter:app", "mocha"]
   grunt.registerTask "build", ["clean:dist", "useminPrepare", "concurrent:dist", "neuter:app", "concat", "cssmin", "uglify", "copy", "rev", "usemin"]
   grunt.registerTask "default", ["jshint", "test", "build"]
-  grunt.registerTask "templates", ["jade:dev", "emberTemplates"]
