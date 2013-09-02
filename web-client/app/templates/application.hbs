@@ -1,0 +1,17 @@
+
+<div id="layout" class="pure-g">
+  <div id="nav" class="pure-u">
+    <h3 id="title"><a href="#/">ADAT BOSS</a></h3>
+    <div class="pure-menu pure-menu-open">
+      <div class="pure-menu-heading">Dashboards<i class="add icon-plus"></i></div>
+      <ul>{{#each dashboards }}
+        <li>
+          {{#link-to 'dashboard' this}}
+          {{ title }}
+          {{/link-to}}
+        </li>{{/each}}
+      </ul>
+    </div>
+  </div>
+  <div id="main" class="pure-u-1">{{outlet}}</div>
+</div>

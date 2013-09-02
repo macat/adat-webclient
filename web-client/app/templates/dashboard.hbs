@@ -1,0 +1,7 @@
+{{#if isEditing}}
+  {{input class="pure-input-1-2" placeholder="Dashboard title" value=title type="text" action="save"}}
+{{else}}
+  <h2>{{ title }}</h2>
+  <span class="edit" {{action 'edit'}}>edit</span>
+{{/if}}
+
