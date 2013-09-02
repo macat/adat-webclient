@@ -3,6 +3,7 @@ App.LoginController = Ember.ObjectController.extend
   isProcessing: false
   email: ''
   password: ''
+  attemptedTransition: null
 
   actions:
     test: ->
@@ -19,8 +20,15 @@ App.LoginController = Ember.ObjectController.extend
       )
       request.then @success.bind(@), @failure.bind(@)
 
-  success: ->
+  success: (data) ->
     @reset()
+    App.Session.set('userId', data.id)
+    if @get('attemptedTransition')?
+      @set('attemptedTransition', null)
+      @transitionTo(@get('attemptedTransition'))
+    else
+      @transitionTo('index')
+
 
   # sign in logic
   failure: ->

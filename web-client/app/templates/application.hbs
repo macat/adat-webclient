@@ -1,5 +1,6 @@
 
 <div id="layout" class="pure-g">
+  {{#if App.Session.isAuthenticated() }}
   <div id="nav" class="pure-u">
     <h3 id="title"><a href="#/">ADAT BOSS</a></h3>
     <div class="pure-menu pure-menu-open">
@@ -13,5 +14,6 @@
       </ul>
     </div>
   </div>
+  {{/if}}
   <div id="main" class="pure-u-1">{{outlet}}</div>
 </div>
