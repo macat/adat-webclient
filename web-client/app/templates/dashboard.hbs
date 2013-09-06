@@ -3,5 +3,21 @@
 {{else}}
   <h2>{{ title }}</h2>
   <span class="edit" {{action 'edit'}}>edit</span>
+  <ul>
+  {{#each widgets}}
+    <li>
+    {{id}} ---
+    {{type}}
+    </li>
+  {{/each}}
+  </ul>
+  <form class="pure-form" {{ action "newWidget" on="submit"}}>
+    <fieldset id="add_new_widget" class="">
+      <legend>Add new Widget</legend>
+      {{input class="pure-input-1-2" placeholder="type" value=newWidgetType type="text"}}
+      <p><input type="submit" value="Add"></p>
+    </fieldset>
+  
+  </form>
 {{/if}}
 

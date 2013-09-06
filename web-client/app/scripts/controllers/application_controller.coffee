@@ -3,3 +3,6 @@ App.ApplicationController = Ember.ObjectController.extend
     @store.find('dashboard')
   ).property()
 
+  isAuthenticated: ->
+    App.Session.isAuthenticated()
+
