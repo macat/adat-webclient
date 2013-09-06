@@ -2,6 +2,7 @@
 
 App.DashboardController = Ember.ObjectController.extend
   isEditing: false
+  newWidgetType: ''
 
   actions:
     edit: ->
@@ -9,5 +10,10 @@ App.DashboardController = Ember.ObjectController.extend
     save: ->
       @content.save()
       @set 'isEditing', false
+    newWidget: ->
+      widget = @store.createRecord('widget')
+      widget.set('type', @get('newWidgetType'))
+      widget.set('dashboard', @content)
+      widget.save()
 
 
