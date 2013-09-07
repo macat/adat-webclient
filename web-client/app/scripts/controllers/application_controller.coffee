@@ -1,8 +1,7 @@
 App.ApplicationController = Ember.ObjectController.extend
   dashboards: (->
     @store.find('dashboard')
-  ).property()
+  ).property("isAuthenticated")
 
-  isAuthenticated: ->
-    App.Session.isAuthenticated()
+  isAuthenticated: Ember.Binding.oneWay('App.Session.isAuthenticated')
 
