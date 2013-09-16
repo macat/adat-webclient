@@ -17,6 +17,7 @@ Ember.Application.initializer
       userChanged: (->
         if @get("userId")? && @get("userId").trim() != ''
           @set "user", @store.find('user', @get("userId"))
+          localStorage.userId = @get("userId")
         else
           @set "user", null
           delete localStorage.userId
