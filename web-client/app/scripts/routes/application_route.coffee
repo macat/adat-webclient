@@ -7,5 +7,5 @@ App.ApplicationRoute = Ember.Route.extend
 
 
   beforeModel: (transition) ->
-    unless App.Session.isAuthenticated()
+    unless App.Session.get('isAuthenticated')
       @redirectToLogin(transition)

@@ -8,3 +8,4 @@ require 'scripts/models/*'
 require 'scripts/routes/*'
 require 'scripts/views/*'
 require 'scripts/router'
+
