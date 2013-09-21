@@ -3,6 +3,10 @@
 App.DashboardController = Ember.ObjectController.extend
   isEditing: false
   newWidgetType: ''
+  widgetTypes: [
+    'Chart',
+    'Clock'
+  ]
 
   actions:
     edit: ->
@@ -10,6 +14,11 @@ App.DashboardController = Ember.ObjectController.extend
     save: ->
       @content.save()
       @set 'isEditing', false
+    deleteWidget: (widget) ->
+      console.log(this)
+      console.log(widget)
+      widget.deleteRecord()
+      widget.save()
     newWidget: ->
       widget = @store.createRecord('widget')
       widget.set('type', @get('newWidgetType'))
@@ -26,6 +35,8 @@ App.DashboardController = Ember.ObjectController.extend
         }]
       )
 
-      widget.save()
+      widget.save().then =>
+        @content.get('widgets').pushObject(widget)
+
 
 

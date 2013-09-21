@@ -7,6 +7,9 @@ App.Widget = DS.Model.extend
   #config: DS.belongsTo('App.WidgetConfig', embedded: 'always')
   config: DS.attr('object')
 
+  typeView: (->
+    App[@get('type') + 'View']
+  ).property('type')
 
   #App.WidgetConfig = DS.Model.extend
   #  type: DS.attr('string')
