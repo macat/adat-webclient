@@ -11,6 +11,10 @@ App.Widget = DS.Model.extend
     App[@get('type') + 'View']
   ).property('type')
 
+  title: (->
+    @get('config').title
+  ).property('config')
+
   #App.WidgetConfig = DS.Model.extend
   #  type: DS.attr('string')
   #  items: DS.hasMany('App.WidgetItem', embedded: 'always')

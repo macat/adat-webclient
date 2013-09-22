@@ -1,6 +1,7 @@
 
-<h3>{{ view.content.config.title }}</h3>
-{{log view.content}}
+<h3>{{ content.title }}</h3>
+{{log view}}
+{{log content}}
 <span class="button" {{action "deleteWidget" view.content}}>Delete</span>
 {{yield}}
 
