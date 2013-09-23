@@ -67,3 +67,61 @@ h3#title a {
 .add { color: #aaa; cursor: pointer; }
 
 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.widget {
+  padding: 24px;
+  margin: 12px;
+  background: #FDF6E3;
+  border-radius: 3px;
+  box-shadow: 0 0 3px 0px #0E2B36;
+  position: relative;
+}
+
+.widget-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  background: #dedede;
+}
+
+.widget-menu .trigger {
+  height: 16px;
+  padding: 8px 16px;
+}
+
+.widget-menu ul {
+  display: none;
+  list-style: none;
+  margin: 0; padding: 0;
+  cursor: pointer;
+}
+
+.widget-menu li {
+  padding: 8px 16px;
+}
+.widget-menu:hover ul {
+  display: block;
+}
+
+.widget-menu li:hover {
+  background: #7FC9EF;
+}
+
+
