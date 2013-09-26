@@ -1,21 +1,27 @@
 {{#if isEditing}}
-  {{input class="pure-input-1-2" placeholder="Dashboard title" value=title type="text" action="save"}}
-{{else}}
-  <h2>{{ title }}</h2>
-  <span class="edit" {{action 'edit'}}>edit</span>
-  {{view App.WidgetListView contentBinding="widgets" }}
-  {{#each widgets}}
-    {{#if type}}
-      {{view typeView contentBinding="this"}}
-    {{/if}}
-  {{/each}}
-  <form class="pure-form" {{ action "newWidget" on="submit"}}>
-    <fieldset id="add_new_widget" class="">
-      <legend>Add new Widget</legend>
-      {{view Ember.Select contentBinding="widgetTypes" valueBinding="newWidgetType"}}
-      <p><input type="submit" value="Add"></p>
-    </fieldset>
+  <form id="edit-dashboard-form" {{ action "save" on="submit"}}>
+    {{input class="pure-input-1-2" placeholder="Dashboard title" value=title type="text"}}
 
+    <button class="edit pure-button pure-button-xsmall" type="submit">save</button>
   </form>
+{{else}}
+  <h2 class="title">{{ title }}</h2>
+  <button class="edit pure-button pure-button-xsmall" {{action 'edit'}}>edit</button>
 {{/if}}
+
+<form id="new-widget-form" class="pure-form" {{ action "newWidget" on="submit"}}>
+  <fieldset id="add_new_widget" class="">
+    <label>Add new Widget:
+      {{view Ember.Select contentBinding="widgetTypes" valueBinding="newWidgetType"}}
+    </label>
+    <button class="pure-button pure-button-small" type="submit">Add</button>
+  </fieldset>
+
+</form>
+
+{{#each widgets itemController="widget"}}
+  {{#if type}}
+    {{view typeView contentBinding="this"}}
+  {{/if}}
+{{/each}}
 

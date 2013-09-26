@@ -1,9 +1,13 @@
 App.ApplicationRoute = Ember.Route.extend
+  actions:
+    logout: ->
+      App.Session.logout()
+      @transitionToRoute('login')
 
   redirectToLogin: (transition) ->
     loginController = @controllerFor('login')
     loginController.set('attemptedTransition', transition)
-    @transitionTo('login')
+    @transitionToRoute('login')
 
 
   beforeModel: (transition) ->
