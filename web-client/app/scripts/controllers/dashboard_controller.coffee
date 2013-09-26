@@ -14,11 +14,6 @@ App.DashboardController = Ember.ObjectController.extend
     save: ->
       @content.save()
       @set 'isEditing', false
-    deleteWidget: (widget) ->
-      console.log(this)
-      console.log(widget)
-      widget.deleteRecord()
-      widget.save()
     newWidget: ->
       widget = @store.createRecord('widget')
       widget.set('type', @get('newWidgetType'))

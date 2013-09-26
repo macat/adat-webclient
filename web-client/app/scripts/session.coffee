@@ -26,5 +26,8 @@ Ember.Application.initializer
       isAuthenticated: (->
         @get("userId")?
       ).property("userId")
+      logout: ->
+        $.post('/logout').always (response) =>
+          @set 'userId', null
     ).create()
 
