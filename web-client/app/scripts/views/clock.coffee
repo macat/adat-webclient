@@ -1,5 +1,6 @@
 App.ClockView = Ember.View.extend
-  classNames: ['clock']
+  tagName: 'section'
+  classNames: ['clock', 'widget']
   templateName: 'clock'
   layoutName: 'widget'
 
@@ -34,7 +35,7 @@ App.ClockView = Ember.View.extend
     scaleMins = d3.scale.linear().domain([0,59 + 59/60]).range([0,2*pi])
     scaleHours = d3.scale.linear().domain([0,11 + 59/60]).range([0,2*pi])
 
-    vis = d3.select("##{elementId}")
+    vis = d3.select("##{elementId} .widget-content")
         .append("svg:svg")
         .attr("width", width)
         .attr("height", height)

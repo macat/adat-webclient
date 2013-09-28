@@ -1,5 +1,6 @@
 
 App.ChartView = Ember.View.extend
+  tagName: 'section'
   classNames: ['chart']
   templateName: 'chart'
   layoutName: 'widget'

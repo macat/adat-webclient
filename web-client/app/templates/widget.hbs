@@ -1,14 +1,12 @@
-<section class="widget">
-  <div class="widget-menu">
-    <span class="trigger">Menu</span>
-    <ul>
-      <li {{action "deleteWidget" view.content}}>Delete</li>
-    </ul>
-  </div>
-  <h3>{{ content.title }}</h3>
-  {{log view}}
-  {{log content}}
-  <div class="widget-content">
-    {{yield}}
-  </div>
-</section>
+<div class="widget-menu">
+  <span class="trigger">Menu</span>
+  <ul>
+    <li {{action "delete"}}>Delete</li>
+  </ul>
+</div>
+<h3>{{ content.title }}</h3>
+{{log view}}
+{{log content}}
+<div class="widget-content">
+  {{yield}}
+</div>
