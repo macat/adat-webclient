@@ -1,6 +1,6 @@
 /* Put your CSS here */
 html, body {
-    margin: 30px 0;
+    margin: 0px 0;
 }
 body {
   background: #e5e5e5;
@@ -24,6 +24,9 @@ body {
   font-size: 125%;
 }
 
+.bg-maroon {  background: rgb(202, 60, 60); }
+.bg-green {  background: rgb(28, 184, 65); }
+
 h2.title { display: inline-block; }
 
 h3#title { width: 100%; }
@@ -38,7 +41,8 @@ h3#title a {
 }
 
 #layout {
-  padding-left: 260px;
+  padding-left: 264px;
+  padding-right: 14px;
   left: 0;
 }
 
@@ -69,6 +73,8 @@ h3#title a {
   }
   #nav .add { float: right; margin: 0 12px; }
 
+#nav-footer { position: absolute; bottom: 12px; left: 12px; }
+
 .add { color: #aaa; cursor: pointer; }
 
 
@@ -92,19 +98,20 @@ h3#title a {
 .edit-title {
   font-size: 1.5em;
   font-weight: bold;
-  width: 80%;
+  width: 70%;
   background: transparent;
   border: none;
   border-bottom: 1px dotted #000;
 }
 
 #new-widget-form {
-  background: #efefef;
+  float: right;
+  margin: 24px;
 }
 
 .widget {
   padding: 24px;
-  margin: 12px;
+  margin: 12px 0;
   background: #fff;
   border-radius: 3px;
   border: 1px solid #d8d8d8;
