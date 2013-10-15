@@ -1,13 +1,6 @@
-{{#if isEditing}}
-  <form id="edit-dashboard-form" {{ action "save" on="submit"}}>
-    {{input class="pure-input-1-2" placeholder="Dashboard title" value=title type="text"}}
-
-    <button class="edit pure-button pure-button-xsmall" type="submit">save</button>
-  </form>
-{{else}}
+{{#view App.InlineTextField valueBinding=title}}
   <h2 class="title">{{ title }}</h2>
-  <button class="edit pure-button pure-button-xsmall" {{action 'edit'}}>edit</button>
-{{/if}}
+{{/view}}
 
 <form id="new-widget-form" class="pure-form" {{ action "newWidget" on="submit"}}>
   <fieldset id="add_new_widget" class="">
@@ -16,7 +9,6 @@
     </label>
     <button class="pure-button pure-button-small" type="submit">Add</button>
   </fieldset>
-
 </form>
 
 {{#each widgets itemController="widget"}}
