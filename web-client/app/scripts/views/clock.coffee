@@ -26,9 +26,9 @@ App.ClockView = Ember.View.extend
     elementId = @get('elementId');
 
     width = 400
-    height = 200
+    height = 110
     offSetX = 150
-    offSetY = 100
+    offSetY = 85
 
     pi = Math.PI
     scaleSecs = d3.scale.linear().domain([1,60 + 999/1000]).range([0,2*pi])

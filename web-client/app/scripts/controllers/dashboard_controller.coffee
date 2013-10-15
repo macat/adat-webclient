@@ -1,19 +1,16 @@
 
 
 App.DashboardController = Ember.ObjectController.extend
-  isEditing: false
   newWidgetType: ''
   widgetTypes: [
     'Chart',
     'Clock'
   ]
 
+  save: ->
+    @content.save()
+
   actions:
-    edit: ->
-      @set 'isEditing', true
-    save: ->
-      @content.save()
-      @set 'isEditing', false
     newWidget: ->
       widget = @store.createRecord('widget')
       widget.set('type', @get('newWidgetType'))

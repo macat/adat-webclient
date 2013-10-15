@@ -6,7 +6,8 @@
     "font-awesome": "~3.2.1",
     "ember": "~1.0.0",
     "ember-data-shim": "~1.0.0",
-    "d3": "~3.3"
+    "d3": "~3.3",
+    "nvd3": "v1.1.12-beta"
   },
   "devDependencies": {
     "ember-mocha-adapter": "0.1.1"

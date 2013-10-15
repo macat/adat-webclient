@@ -1,7 +1,10 @@
 <div class="widget-menu">
-  <span class="trigger">Menu</span>
+  <span class="trigger"><i class="icon-chevron-down"></i></span>
   <ul>
+    <li {{action "edit"}}>Edit</li>
     <li {{action "delete"}}>Delete</li>
+    <li {{action "showTable"}}>Show Table</li>
+    <li {{action "export"}}>Export</li>
   </ul>
 </div>
 <h3>{{ content.title }}</h3>
