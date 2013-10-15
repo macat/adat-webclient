@@ -116,24 +116,31 @@ h3#title a {
   position: absolute;
   top: 0;
   right: 0;
-  width: 120px;
-  background: #dedede;
+  cursor: pointer;
+  padding: 10px 0 0 0;
 }
 
 .widget-menu .trigger {
-  height: 16px;
-  padding: 8px 16px;
+  float: right;
+  padding: 0 10px;
+  width: 20px;
+  height: 20px;
 }
 
 .widget-menu ul {
   display: none;
+  clear: both;
   list-style: none;
   margin: 0; padding: 0;
-  cursor: pointer;
 }
 
 .widget-menu li {
-  padding: 8px 16px;
+  padding: 6px 10px;
+  font-size: .8em;
+}
+.widget-menu:hover {
+  background: #efefef;
+  border-radius: 3px;
 }
 .widget-menu:hover ul {
   display: block;
