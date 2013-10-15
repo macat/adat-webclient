@@ -3,7 +3,6 @@
   {{#if isAuthenticated }}
   <div id="nav" class="pure-u">
     <h3 id="title"><a href="#/">ADAT BOSS</a></h3>
-    <button class="pure-button" {{action "logout"}}>Log Out</button>
     <div class="pure-menu pure-menu-open">
       <div class="pure-menu-heading">Dashboards<i class="add icon-plus"></i></div>
       <ul>
@@ -15,6 +14,10 @@
           </li>
         {{/each}}
       </ul>
+    </div>
+    <div id="nav-footer">
+      <button class="pure-button pure-button-small" {{action "logout"}}><i class="icon-cogs"></i></button>
+      <button class="pure-button pure-button-small bg-maroon" {{action "logout"}}><i class="icon-off"></i></button>
     </div>
   </div>
   {{/if}}

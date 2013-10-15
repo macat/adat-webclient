@@ -1,6 +1,9 @@
 /* Put your CSS here */
 html, body {
-    margin: 30px 0;
+    margin: 0px 0;
+}
+body {
+  background: #e5e5e5;
 }
 
 
@@ -21,6 +24,9 @@ html, body {
   font-size: 125%;
 }
 
+.bg-maroon {  background: rgb(202, 60, 60); }
+.bg-green {  background: rgb(28, 184, 65); }
+
 h2.title { display: inline-block; }
 
 h3#title { width: 100%; }
@@ -35,7 +41,8 @@ h3#title a {
 }
 
 #layout {
-  padding-left: 300px;
+  padding-left: 264px;
+  padding-right: 14px;
   left: 0;
 }
 
@@ -66,6 +73,8 @@ h3#title a {
   }
   #nav .add { float: right; margin: 0 12px; }
 
+#nav-footer { position: absolute; bottom: 12px; left: 12px; }
+
 .add { color: #aaa; cursor: pointer; }
 
 
@@ -86,16 +95,27 @@ h3#title a {
   stroke-width: 1.5px;
 }
 
+.edit-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  width: 70%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dotted #000;
+}
+
 #new-widget-form {
-  background: #efefef;
+  float: right;
+  margin: 24px;
 }
 
 .widget {
   padding: 24px;
-  margin: 12px;
-  background: #FDF6E3;
+  margin: 12px 0;
+  background: #fff;
   border-radius: 3px;
-  box-shadow: 0 0 3px 0px #0E2B36;
+  border: 1px solid #d8d8d8;
+  border-bottom-width: 2px;
   position: relative;
 }
 
@@ -103,24 +123,31 @@ h3#title a {
   position: absolute;
   top: 0;
   right: 0;
-  width: 120px;
-  background: #dedede;
+  cursor: pointer;
+  padding: 10px 0 0 0;
 }
 
 .widget-menu .trigger {
-  height: 16px;
-  padding: 8px 16px;
+  float: right;
+  padding: 0 10px;
+  width: 20px;
+  height: 20px;
 }
 
 .widget-menu ul {
   display: none;
+  clear: both;
   list-style: none;
   margin: 0; padding: 0;
-  cursor: pointer;
 }
 
 .widget-menu li {
-  padding: 8px 16px;
+  padding: 6px 10px;
+  font-size: .8em;
+}
+.widget-menu:hover {
+  background: #efefef;
+  border-radius: 3px;
 }
 .widget-menu:hover ul {
   display: block;
