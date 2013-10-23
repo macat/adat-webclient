@@ -1,5 +1,4 @@
 
-
 App.SessionController = Ember.Controller.extend
   userId: localStorage.userId
   user: null
@@ -24,7 +23,3 @@ App.SessionController = Ember.Controller.extend
   isAuthenticated: (->
     @get("userId")? && @get("userId").trim() != ''
   ).property("userId")
-
-  logout: ->
-    $.post('/logout').always (response) =>
-      @set 'userId', null
