@@ -32,4 +32,7 @@ App.LoginRoute = Ember.Route.extend
 
 App.LogoutRoute = Ember.Route.extend
   renderTemplate: (controller) ->
-    controller.logout()
+    if @session.get('isAuthenticated')
+      @session.set('userId', null)
+      $.post('/logout')
+    @transitionTo('login')
