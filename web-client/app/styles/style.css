@@ -158,7 +158,11 @@ h3#title a {
 }
 
 
-.color-picker { position: relative; display: inline-block; }
+.color-picker {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
 .color-picker-swatches {
   display: none;
   position: absolute;
@@ -179,6 +183,6 @@ h3#title a {
 
 
 .item-edit {
-  border-bottom: 1px solid #fff;
   border-radius: 3px;
+  padding: 4px 0 8px;
 }

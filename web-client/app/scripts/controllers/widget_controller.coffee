@@ -4,7 +4,7 @@ App.WidgetController = Ember.ObjectController.extend
   actions:
     edit: ->
       @set('editing', true)
-    done: ->
+    save: ->
       @set('editing', false)
       @content.save()
 
