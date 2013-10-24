@@ -158,3 +158,31 @@ h3#title a {
 }
 
 
+.color-picker {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+.color-picker-swatches {
+  display: none;
+  position: absolute;
+  background: #fff;
+  padding: 4px;
+  width: 140px;
+  z-index: 50;
+}
+.color-picker:hover .color-picker-swatches { display: block; }
+.color-picker-swatch { cursor: pointer; }
+.color-picker-box {
+  width: 20px;
+  height: 20px;
+  border: 1px #e9e9e9 solid;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+
+.item-edit {
+  border-radius: 3px;
+  padding: 4px 0 8px;
+}
