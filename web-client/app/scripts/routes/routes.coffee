@@ -36,3 +36,4 @@ App.LogoutRoute = Ember.Route.extend
       @session.set('userId', null)
       $.post('/logout')
     @transitionTo('login')
+

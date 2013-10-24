@@ -1,0 +1,6 @@
+<span class="color-picker-active color-picker-box" {{bindAttr style="colorStyle"}}></span>
+<div class="color-picker-swatches">
+  {{#each swatches}}
+    <span class="color-picker-swatch color-picker-box" style="background-color: {{unbound this}}" {{action 'colorpick' this}}></span>
+  {{/each}}
+</div>
