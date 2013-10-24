@@ -5,6 +5,9 @@ App.LineChartView = Ember.View.extend
   layoutName: 'widget'
 
   didInsertElement: ->
+    @draw()
+
+  draw: (->
     elementId = @get('elementId');
     nv.addGraph =>
       chart = nv.models.lineChart()
@@ -15,14 +18,21 @@ App.LineChartView = Ember.View.extend
         chart.update()
 
       chart
+  ).observes('controller.editing')
 
   myData: ->
-    series1 = []
-    for i in [1..100]
-      series1.push
-        x: i
-        y: 100 / i
-    @content.get('items').map (item) ->
+    @content.get('items').map (item) =>
       key: item.get('title')
-      values: series1
+      values: @series()
       color: item.get('color')
+
+  series: ->
+    series = []
+    for i in [1..100]
+      series.push
+        x: i
+        y: (100 / i) + @getRandom()
+    series
+
+  getRandom: ->
+    Math.floor(Math.random() * (20 - 0 + 1) + 0);

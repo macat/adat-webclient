@@ -8,14 +8,19 @@
   </ul>
 </div>
 <h3>{{ content.title }}</h3>
-{{log view}}
-{{log content}}
-<div class="widget-content">
-  {{yield}}
-</div>
 {{#if editing }}
   <div class="widget-editing">
-    <h3>Editing</h3>
+    <form class="pure-form">
+      <fieldset>
+        {{#each items itemController="widgetItem" }}
+          {{item-edit item=this }}
+        {{/each}}
+        <button {{action 'addItem'}} class="pure-button pure-button-small"><i class="add icon-plus"></i></button>
+      </fieldset>
+    </form>
     <button {{action done}}>Done</button>
   </div>
 {{/if}}
+<div class="widget-content">
+  {{yield}}
+</div>

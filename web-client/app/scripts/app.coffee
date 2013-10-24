@@ -3,6 +3,7 @@ App = window.App = Ember.Application.create()
 App.inject 'route', 'session', 'controller:session'
 
 # Order and include as you please.
+require 'scripts/components/*'
 require 'scripts/controllers/*'
 require 'scripts/session'
 require 'scripts/store'

@@ -1,15 +1,23 @@
-
 App.Widget = DS.Model.extend
   created: DS.attr('date')
   type: DS.attr('string')
   dashboard: DS.belongsTo('dashboard')
-  #config: DS.belongsTo('App.WidgetConfig', embedded: 'always')
   items: DS.hasMany('widgetItem')
   title: DS.attr('string')
 
   typeView: (->
     App[@get('type') + 'View']
   ).property('type')
+
+App.WidgetItem = DS.Model.extend
+  widget: DS.belongsTo('widget')
+  type: DS.attr('string')
+  title: DS.attr('string')
+  color: DS.attr('string')
+  dataType: DS.attr('string')
+  dataMetric: DS.attr('string')
+  dataChannel: DS.attr('string')
+
 
 App.WidgetSerializer = DS.RESTSerializer.extend
   extractItems: (widget) ->
@@ -54,11 +62,3 @@ App.WidgetSerializer = DS.RESTSerializer.extend
     }
 
 
-App.WidgetItem = DS.Model.extend
-  widget: DS.belongsTo('widget')
-  type: DS.attr('string')
-  title: DS.attr('string')
-  color: DS.attr('string')
-  dataType: DS.attr('string')
-  dataMetric: DS.attr('string')
-  dataChannel: DS.attr('string')
