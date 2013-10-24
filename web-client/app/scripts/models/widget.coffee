@@ -13,30 +13,34 @@ App.Widget = DS.Model.extend
 
 App.WidgetSerializer = DS.RESTSerializer.extend
   extractItems: (widget) ->
-    items = widget.items
+    items = widget.config.items
     items.forEach (item, index) ->
       unless item.id
-        item.id = index
+        item.id = "#{ widget.id }-#{ index }"
 
-    itemIds = items.mapPropery('id')
-    payload.widget.items = itemIds
+    itemIds = items.mapProperty('id')
+    widget.items = itemIds
     items
 
+  extractProperties: (widget) ->
+    for key, value of widget.config
+      widget[key] = value unless key == 'items'
+
   extractSingle: (store, type, payload, id, requestType) ->
-    for key, value of payload.widget.config
-      payload.widget[key] = value
+    @extractProperties(payload.widget)
+    payload.widgetItems = @extractItems(payload.widget)
     delete payload.widget.config
 
-    payload.widgetItems = @extractItems(payload.widget)
-
-    @_super.apply(@, arguments_)
+    @_super(store, type, payload, id, requestType)
 
   extractArray: (store, primaryType, payload) ->
     payload.widgetItems = []
     payload.widgets.forEach (widget) =>
+      @extractProperties(widget)
       payload.widgetItems = payload.widgetItems.concat(@extractItems(widget))
+      delete widget.config
 
-    @_super.apply(@, arguments_)
+    @_super(store, primaryType, payload)
 
   serialize: (record, options) ->
     {

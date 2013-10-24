@@ -22,9 +22,7 @@ App.LineChartView = Ember.View.extend
       series1.push
         x: i
         y: 100 / i
-    [
-      key: "Series #1"
+    @content.get('items').map (item) ->
+      key: item.get('title')
       values: series1
-      color: @content.get('config').items[0].color
-    ]
-
+      color: item.get('color')

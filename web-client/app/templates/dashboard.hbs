@@ -1,4 +1,4 @@
-<form id="new-widget-form" class="pure-form" {{ action "newWidget" on="submit"}}>
+<form id="new-widget-form" class="pure-form" {{ action "createWidget" on="submit"}}>
   <fieldset id="add_new_widget" class="">
     <label>
       {{view Ember.Select contentBinding="widgetTypes" valueBinding="newWidgetType"}}

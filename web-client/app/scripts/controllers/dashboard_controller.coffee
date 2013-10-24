@@ -12,11 +12,12 @@ App.DashboardController = Ember.ObjectController.extend
     @content.save()
 
   actions:
-    newWidget: ->
-      widget = @store.createRecord('widget')
-      widget.set('type', @get('newWidgetType'))
-      widget.set('dashboard', @content)
-      widget.set('title', 'Untitled')
+    createWidget: ->
+      widget = @store.createRecord 'widget',
+        type: @get('newWidgetType')
+        dashboard: @content
+        title: 'Untitled'
+
       widget.get('items').createRecord
         type: 'line',
         title: 'Home Page',
