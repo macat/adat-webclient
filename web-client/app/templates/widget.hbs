@@ -13,3 +13,9 @@
 <div class="widget-content">
   {{yield}}
 </div>
+{{#if editing }}
+  <div class="widget-editing">
+    <h3>Editing</h3>
+    <button {{action done}}>Done</button>
+  </div>
+{{/if}}
