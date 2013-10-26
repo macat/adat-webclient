@@ -1,1 +1,1 @@
-App.UserController = Ember.ObjectController.extend
+App.UserEditController = Ember.ObjectController.extend()

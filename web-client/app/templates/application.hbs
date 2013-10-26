@@ -15,6 +15,18 @@
         {{/each}}
       </ul>
     </div>
+    <div class="pure-menu pure-menu-open">
+      <div class="pure-menu-heading">Settings</div>
+      <ul>
+        <li>
+          {{#link-to 'users.index'}}Users{{/link-to}}
+        </li>
+        <li>
+          {{#link-to 'groups.index'}}Groups{{/link-to}}
+        </li>
+      </ul>
+    </div>
+
     <div id="nav-footer">
       <button class="pure-button pure-button-small" {{action "logout"}}><i class="icon-cogs"></i></button>
       <button class="pure-button pure-button-small bg-maroon" {{action "logout"}}><i class="icon-off"></i></button>

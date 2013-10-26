@@ -37,3 +37,22 @@ App.LogoutRoute = Ember.Route.extend
       $.post('/logout')
     @transitionTo('login')
 
+App.AdminRoute = Ember.Route.extend()
+
+App.UsersRoute = Ember.Route.extend
+  model: ->
+    console.log('route')
+    @store.find('user')
+
+App.UserRoute = Ember.Route.extend
+  model: (params) ->
+    @store.find('user', params.id)
+
+App.GroupsRoute = Ember.Route.extend
+  model: ->
+    @store.find('group')
+
+App.GroupRoute = Ember.Route.extend
+  model: (params) ->
+    @store.find('group', params.id)
+

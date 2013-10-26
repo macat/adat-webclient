@@ -1,5 +1,3 @@
-
-
 App.DashboardController = Ember.ObjectController.extend
   newWidgetType: ''
   widgetTypes: [
@@ -28,6 +26,3 @@ App.DashboardController = Ember.ObjectController.extend
 
       widget.save().then =>
         @content.get('widgets').pushObject(widget)
-
-
-

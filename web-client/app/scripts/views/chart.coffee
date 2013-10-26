@@ -1,3 +1,4 @@
+
 App.ChartView = Ember.View.extend
   tagName: 'section'
   classNames: ['chart', 'widget']
@@ -27,4 +28,3 @@ App.ChartView = Ember.View.extend
       values: series1
       color: "#0000ff"
     ]
-    

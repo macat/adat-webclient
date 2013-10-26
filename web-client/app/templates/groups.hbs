@@ -1,25 +1,19 @@
 {{outlet}}
 <div class="pure-g">
   <div class="pure-u-3-5">
-    <h2 class="title pure-menu-heading">Users</h2>
+    <h2 class="title pure-menu-heading">Groups</h2>
     <table class="pure-table">
       <thead>
         <tr>
           <th>Name</th>
           <th>Created</th>
-          <th>Groups</th>
         </tr>
       </thead>
       <tbody>
       {{#each}}
         <tr>
-          <td>{{#link-to 'user' this }}{{name}}{{/link-to}}</td>
+          <td>{{#link-to 'group' this }}{{name}}{{/link-to}}</td>
           <td>{{created}}</td>
-          <td>
-            {{#each groups}}
-              {{#link-to 'group' this}}{{name}}{{/link-to}}
-            {{/each}}
-          </td>
         </tr>
       {{/each}}
       </tbody>
