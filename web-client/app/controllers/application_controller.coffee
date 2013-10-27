@@ -5,3 +5,7 @@ App.ApplicationController = Ember.ObjectController.extend
   ).property()
 
   isAuthenticatedBinding: 'controllers.session.isAuthenticated'
+
+  isSettings: (->
+    console.log('test')
+  ).property()

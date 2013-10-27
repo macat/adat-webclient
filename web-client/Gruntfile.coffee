@@ -28,8 +28,12 @@ module.exports = (grunt) ->
         tasks: ["emberTemplates"]
 
       coffee:
-        files: ["<%= yeoman.app %>/scripts/{,*/}*.coffee"]
+        files: ["<%= yeoman.app %>/{,*/}*.coffee"]
         tasks: ["coffee:dist"]
+
+      copyjs:
+        files: ["<%= yeoman.app %>/{,*/}*.js"]
+        tasks: ["copy:js"]
 
       coffeeTest:
         files: ["test/spec/{,*/}*.coffee"]
@@ -84,7 +88,7 @@ module.exports = (grunt) ->
       options:
         jshintrc: ".jshintrc"
 
-      all: ["Gruntfile.js", "<%= yeoman.app %>/scripts/{,*/}*.js", "!<%= yeoman.app %>/scripts/vendor/*", "test/spec/{,*/}*.js"]
+      all: ["Gruntfile.js", "<%= yeoman.app %>/{,*/}*.js", "!<%= yeoman.app %>/vendor/*", "test/spec/{,*/}*.js"]
 
     mocha:
       all:
@@ -96,7 +100,7 @@ module.exports = (grunt) ->
       dist:
         files: [
           expand: true
-          cwd: "<%= yeoman.app %>/scripts"
+          cwd: "<%= yeoman.app %>"
           src: "{,*/}*.coffee"
           dest: "tmp/scripts"
           ext: ".js"
@@ -111,18 +115,6 @@ module.exports = (grunt) ->
           ext: ".js"
         ]
 
-    # not used since Uglify task does concat,
-    # but still available if needed
-    #concat: {
-    #            dist: {}
-    #        },
-    
-    # not enabled since usemin task does concat and uglify
-    # check index.html to edit your build targets
-    # enable this task if you prefer defining your build targets here
-    #uglify: {
-    #            dist: {}
-    #        },
     rev:
       dist:
         files:
@@ -193,6 +185,14 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>"
           src: ["*.{ico,txt}", ".htaccess", "images/{,*/}*.{webp,gif}", "styles/fonts/*"]
         ]
+
+      js:
+        files: [
+          expand: true
+          cwd: "<%= yeoman.app %>"
+          src: "{,*/}*.js"
+          dest: "tmp/scripts"
+        ]
       dev:
         files: [
             cwd: "app/bower_components/font-awesome/font"
@@ -236,14 +236,14 @@ module.exports = (grunt) ->
         options:
           template: "{%= src %}"
           filepathTransform: (filepath) ->
-            "tmp/" + filepath
+            "tmp/scripts/" + filepath
 
         src: ["tmp/scripts/app.js"]
         dest: "tmp/scripts/combined-scripts.js"
 
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run ["clean:server", "copy:dev", "concurrent:server", "neuter:app", "connect:livereload", "watch"]
+    grunt.task.run ["clean:server", "copy:dev", "copy:js", "concurrent:server", "neuter:app", "connect:livereload", "watch"]
 
   grunt.registerTask "test", ["clean:server", "concurrent:test", "connect:test", "neuter:app", "mocha"]
   grunt.registerTask "build", ["clean:dist", "useminPrepare", "concurrent:dist", "neuter:app", "concat", "cssmin", "uglify", "copy", "rev", "usemin"]

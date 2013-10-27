@@ -3,6 +3,9 @@ App.ApplicationRoute = Ember.Route.extend
     logout: ->
       @transitionTo('logout')
 
+    settings: ->
+      @transitionTo('users')
+
   redirectToLogin: (transition) ->
     if transition?
       loginController = @controllerFor('login')

@@ -28,7 +28,7 @@
     </div>
 
     <div id="nav-footer">
-      <button class="pure-button pure-button-small" {{action "logout"}}><i class="icon-cogs"></i></button>
+      {{#link-to 'users' tagName="button" class="pure-button pure-button-small"}}<i class="icon-cogs"></i>{{/link-to}}
       <button class="pure-button pure-button-small bg-maroon" {{action "logout"}}><i class="icon-off"></i></button>
     </div>
   </div>
