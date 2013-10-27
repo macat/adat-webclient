@@ -99,7 +99,6 @@ function Chart(selector) {
 		} else {
 			for (k in s) {
 				if (typeof setters[k] != "undefined") {
-				console.log(k, s[k]);
 					setters[k](s[k]);
 				}
 			}
