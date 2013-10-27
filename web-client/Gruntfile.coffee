@@ -28,7 +28,7 @@ module.exports = (grunt) ->
         tasks: ["emberTemplates"]
 
       coffee:
-        files: ["<%= yeoman.app %>/scripts/{,*/}*.coffee"]
+        files: ["<%= yeoman.app %>/{,*/}*.coffee"]
         tasks: ["coffee:dist"]
 
       coffeeTest:
@@ -84,7 +84,7 @@ module.exports = (grunt) ->
       options:
         jshintrc: ".jshintrc"
 
-      all: ["Gruntfile.js", "<%= yeoman.app %>/scripts/{,*/}*.js", "!<%= yeoman.app %>/scripts/vendor/*", "test/spec/{,*/}*.js"]
+      all: ["Gruntfile.js", "<%= yeoman.app %>/{,*/}*.js", "!<%= yeoman.app %>/vendor/*", "test/spec/{,*/}*.js"]
 
     mocha:
       all:
@@ -96,7 +96,7 @@ module.exports = (grunt) ->
       dist:
         files: [
           expand: true
-          cwd: "<%= yeoman.app %>/scripts"
+          cwd: "<%= yeoman.app %>"
           src: "{,*/}*.coffee"
           dest: "tmp/scripts"
           ext: ".js"
@@ -111,18 +111,6 @@ module.exports = (grunt) ->
           ext: ".js"
         ]
 
-    # not used since Uglify task does concat,
-    # but still available if needed
-    #concat: {
-    #            dist: {}
-    #        },
-    
-    # not enabled since usemin task does concat and uglify
-    # check index.html to edit your build targets
-    # enable this task if you prefer defining your build targets here
-    #uglify: {
-    #            dist: {}
-    #        },
     rev:
       dist:
         files:
