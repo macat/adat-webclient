@@ -16,6 +16,7 @@ App.LineChartView = Ember.View.extend
     statsd.sources(sources)
     statsd.query 1377660000e3, 20, (error, response) =>
       chart = new Chart("##{@get('elementId')} svg")
-      chart.settings(data: response.data, ts: 1377660000e3)
+      chart.settings(data: response.data, ts: 1377660000e3, xDomain: [response.ts, response.ts+response.data[0].length*statsd.granularity()], lineColors: ["red"], lineWidths: [2])
+      console.log(response)
   ).observes('controller.editing')
 
