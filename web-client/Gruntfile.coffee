@@ -31,6 +31,10 @@ module.exports = (grunt) ->
         files: ["<%= yeoman.app %>/{,*/}*.coffee"]
         tasks: ["coffee:dist"]
 
+      copyjs:
+        files: ["<%= yeoman.app %>/{,*/}*.js"]
+        tasks: ["copy:js"]
+
       coffeeTest:
         files: ["test/spec/{,*/}*.coffee"]
         tasks: ["coffee:test"]
@@ -181,6 +185,14 @@ module.exports = (grunt) ->
           dest: "<%= yeoman.dist %>"
           src: ["*.{ico,txt}", ".htaccess", "images/{,*/}*.{webp,gif}", "styles/fonts/*"]
         ]
+
+      js:
+        files: [
+          expand: true
+          cwd: "<%= yeoman.app %>"
+          src: "{,*/}*.js"
+          dest: "tmp/scripts"
+        ]
       dev:
         files: [
             cwd: "app/bower_components/font-awesome/font"
@@ -224,14 +236,14 @@ module.exports = (grunt) ->
         options:
           template: "{%= src %}"
           filepathTransform: (filepath) ->
-            "tmp/" + filepath
+            "tmp/scripts/" + filepath
 
         src: ["tmp/scripts/app.js"]
         dest: "tmp/scripts/combined-scripts.js"
 
   grunt.registerTask "server", (target) ->
     return grunt.task.run(["build", "connect:dist:keepalive"])  if target is "dist"
-    grunt.task.run ["clean:server", "copy:dev", "concurrent:server", "neuter:app", "connect:livereload", "watch"]
+    grunt.task.run ["clean:server", "copy:dev", "copy:js", "concurrent:server", "neuter:app", "connect:livereload", "watch"]
 
   grunt.registerTask "test", ["clean:server", "concurrent:test", "connect:test", "neuter:app", "mocha"]
   grunt.registerTask "build", ["clean:dist", "useminPrepare", "concurrent:dist", "neuter:app", "concat", "cssmin", "uglify", "copy", "rev", "usemin"]
