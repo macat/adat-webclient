@@ -623,7 +623,7 @@ function StatsdCache(client) {
 		length = Math.max(0, length);
 
 		output = {
-			from: from,
+			ts: from,
 			data: data.map(function (d) {
 				return d.slice(offset, offset + length);
 			})
